@@ -1,0 +1,11 @@
+{
+  "name": "hiracollege",
+  "version": "1.0.0",
+  "description": "result portal",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emmanuel Omonzebaguan",
+  "license": "MIT"
+}
