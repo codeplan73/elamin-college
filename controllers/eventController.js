@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler')
-const jwt = require('jsonwebtoken')
 const mysql2 = require('mysql2') 
 
 const db = mysql2.createConnection({
@@ -10,24 +9,49 @@ const db = mysql2.createConnection({
     database: process.env.DB_DATABASE,
 })
 
-// get all events
+
 const getEvents = asyncHandler(async(req, res) => {
-    res.send('get all events')
+    const q = "SELECT * FROM tblnews";
+
+   db.query(q, (err, data) => {
+    if(err) return res.json(err);
+
+    res.status(200).json(data);
+   })
 })
 
-// get all events
 const showEvent = asyncHandler(async(req, res) => {
-    res.send('show event')
+    const eventId = req.params.id
+
+    const q = "SELECT * FROM tblnews WHERE ID = ?";
+    db.query(q, [eventId], (err, data) => {
+        if(err) return res.json(err)
+
+        res.status(200).json(data)
+    })
 })
 
-// get all events
 const createEvent = asyncHandler(async(req, res) => {
-    res.send('create event')
+    const {title, body, date, code} = req.body
+    const q = "INSERT INTO tblnews (`Title`, `Body`, `DatePosted`, `Code`) VALUES (?)"
+    const values = [title, body, date, code]
+
+    db.query(q, [values], (err, data) => {
+        if(err) return res.json(err)
+
+        res.status(200).json(data)
+    })
 })
 
-// get all events
 const deleteEvent = asyncHandler(async(req, res) => {
-    res.send('delete event')
+    const eventId = req.params.id;
+    const q = "DELETE FROM tblnews WHERE id = ?";
+
+    db.query(q, [eventId], (err, data) => {
+        if(err) return res.json(err);
+
+        res.status(200).json(data)
+    })
 })
 
 module.exports = {

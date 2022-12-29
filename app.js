@@ -10,6 +10,10 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 const port = process.env.PORT;
 const app = express()
 
+// image upload with cloudinary
+const fileUpload = require('express-fileupload');
+const cloudinary = require('cloudinary').v2
+
 // routes
 const authRouter = require('./routes/authRoutes')
 const adminRouter = require('./routes/adminRoutes')
@@ -20,10 +24,19 @@ const resultRouter = require('./routes/resultRoutes')
 const studentRouter = require('./routes/studentRoutes')
 const teamRouter = require('./routes/teamRoutes')
 
+// image upload
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+})
+
+
 app.use(morgan("tiny"));
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use(fileUpload({ useTempFiles: true }));
 
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/admin", adminRouter)

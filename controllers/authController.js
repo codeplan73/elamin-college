@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler')
-const jwt = require('jsonwebtoken')
 const mysql2 = require('mysql2');
 const { attachCookiesToResponse, createTokenUser } = require("./../utils"); 
 
