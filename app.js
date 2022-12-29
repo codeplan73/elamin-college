@@ -17,9 +17,10 @@ const cloudinary = require('cloudinary').v2
 // routes
 const authRouter = require('./routes/authRoutes')
 const adminRouter = require('./routes/adminRoutes')
+const currentTermRouter = require('./routes/currentTermRoutes')
 const eventRouter = require('./routes/eventRoutes')
 const galleryRouter = require('./routes/galleryRoutes')
-const infoRouter = require('./routes/infoRoutes')
+const generalInfoRoutes = require('./routes/generalInfoRoutes')
 const resultRouter = require('./routes/resultRoutes')
 const studentRouter = require('./routes/studentRoutes')
 const teamRouter = require('./routes/teamRoutes')
@@ -40,9 +41,10 @@ app.use(fileUpload({ useTempFiles: true }));
 
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/admin", adminRouter)
+app.use("/api/v1/currentterm", currentTermRouter)
 app.use("/api/v1/event", eventRouter)
 app.use("/api/v1/gallery", galleryRouter)
-app.use("/api/v1/info", infoRouter)
+app.use("/api/v1/info", generalInfoRoutes)
 app.use("/api/v1/result", resultRouter)
 app.use("/api/v1/student", studentRouter)
 app.use("/api/v1/team", teamRouter)

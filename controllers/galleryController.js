@@ -1,9 +1,7 @@
 const asyncHandler = require('express-async-handler')
-const jwt = require('jsonwebtoken')
 const mysql2 = require('mysql2')
 const cloudinary = require('cloudinary').v2
 const fs = require('fs')
-const path = require('path')
 
 const db = mysql2.createConnection({
   host: process.env.DB_HOST,
@@ -13,7 +11,6 @@ const db = mysql2.createConnection({
   database: process.env.DB_DATABASE,
 })
 
-// get all gallery
 const getImages = asyncHandler(async (req, res) => {
   const q = 'SELECT * FROM tblgallery'
 
@@ -24,7 +21,6 @@ const getImages = asyncHandler(async (req, res) => {
   })
 })
 
-// get all gallery
 const createImages = asyncHandler(async (req, res) => {
   const result = await cloudinary.uploader.upload(
     req.files.image.tempFilePath,
@@ -36,10 +32,9 @@ const createImages = asyncHandler(async (req, res) => {
   fs.unlinkSync(req.files.image.tempFilePath)
   req.body.visualProof = result.secure_url
 
-  const imgLink = req.body.visualProof;
+  const imgLink = req.body.visualProof
 
-  const q =
-    'INSERT INTO tblgallery (`image`) VALUES (?)'
+  const q = 'INSERT INTO tblgallery (`image`) VALUES (?)'
 
   db.query(q, [imgLink], (err, data) => {
     if (err) return res.json(err)
@@ -48,16 +43,15 @@ const createImages = asyncHandler(async (req, res) => {
   })
 })
 
-// get all gallery
 const deleteImages = asyncHandler(async (req, res) => {
-  const imageId = req.params.id;
-    const q = "DELETE FROM tblgallery WHERE id = ?";
+  const imageId = req.params.id
+  const q = 'DELETE FROM tblgallery WHERE id = ?'
 
-    db.query(q, [imageId], (err, data) => {
-        if(err) return res.json(err);
+  db.query(q, [imageId], (err, data) => {
+    if (err) return res.json(err)
 
-        res.status(200).json(data)
-    })
+    res.status(200).json(data)
+  })
 })
 
 module.exports = {

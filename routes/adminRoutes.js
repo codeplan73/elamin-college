@@ -18,5 +18,4 @@ router
   .patch(authenticateUser, updateStudentRecord)
   .delete(authenticateUser, deleteStudentRecord)
 
-
 module.exports = router

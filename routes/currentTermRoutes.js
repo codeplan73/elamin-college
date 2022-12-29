@@ -5,7 +5,7 @@ const {
   getCurrentTerm,
   showCurrentTerm,
   updateCurrentTerm,
-} = require('../controllers/infoController')
+} = require('../controllers/currentTermController')
 
 router.get('/', getCurrentTerm)
 router.get('/:id', showCurrentTerm)

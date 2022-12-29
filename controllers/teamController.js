@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
-const jwt = require('jsonwebtoken')
 const mysql2 = require('mysql2')
+const cloudinary = require('cloudinary').v2
+const fs = require('fs')
 
 const db = mysql2.createConnection({
   host: process.env.DB_HOST,
@@ -10,29 +11,54 @@ const db = mysql2.createConnection({
   database: process.env.DB_DATABASE,
 })
 
-// get all teams
 const getTeams = asyncHandler(async (req, res) => {
-  res.send('get all teams')
+  const q = 'SELECT * FROM tblfeatured'
+
+  db.query(q, (err, data) => {
+    if (err) return res.json(err)
+    res.status(200).json(data)
+  })
 })
 
-// update team
 const createTeam = asyncHandler(async (req, res) => {
-  res.send('create team')
+  const result = await cloudinary.uploader.upload(
+    req.files.image.tempFilePath,
+    {
+      use_filename: true,
+      folder: 'hira-featured',
+    }
+  )
+  fs.unlinkSync(req.files.image.tempFilePath)
+  req.body.visualProof = result.secure_url
+
+  const imageLink = req.body.visualProof
+
+  const { name, comment } = req.body
+
+  const q =
+    'INSERT INTO tblfeatured (`Fullnames`, `Image`, `Comments`) VALUES (?)'
+  const values = [name, imageLink, comment]
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err)
+
+    res.status(200).json(data)
+  })
 })
 
-// update team
-const updateTeam = asyncHandler(async (req, res) => {
-  res.send('update team')
-})
-
-// delete team
 const deleteTeam = asyncHandler(async (req, res) => {
-  res.send('delete team')
+  const teamId = req.params.id
+  const q = 'DELETE FROM tblfeatured WHERE id = ?'
+
+  db.query(q, [teamId], (err, data) => {
+    if (err) return res.json(err)
+
+    res.status(200).json(data)
+  })
 })
 
 module.exports = {
   getTeams,
   createTeam,
-  updateTeam,
-  deleteTeam
+  deleteTeam,
 }

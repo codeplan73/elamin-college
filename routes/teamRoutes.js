@@ -4,16 +4,14 @@ const router = express.Router()
 const {
   getTeams,
   createTeam,
-  updateTeam,
   deleteTeam,
 } = require('../controllers/teamController')
 
 router.route('/')
-    .get(getTeams)
-    .post(createTeam)
+  .get(getTeams)
+  .post(createTeam)
 
 router.route('/:id')
-    .patch(updateTeam)
-    .delete(deleteTeam)
+  .delete(deleteTeam)
 
 module.exports = router
