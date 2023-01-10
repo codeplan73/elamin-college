@@ -1,10 +1,12 @@
 import React from 'react'
 import { Hero } from '../components'
 import { Link } from 'react-router-dom'
+import { Nav, Footer } from '../components/'
 
 const Event = () => {
   return (
     <>
+    <Nav />
       <Hero title="News & Event" text="Updates and bulletine" />
 
       <div className="bg-white flex flex-col items-center justify-center gap-2 py-20 container max-w-7xl mx-auto pb-5 px-4 md:px-20">
@@ -63,6 +65,7 @@ const Event = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

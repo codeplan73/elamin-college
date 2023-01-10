@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
 
-const Dashboard = () => {
+const SchoolFees = () => {
   return (
     <div className="flex flex-col md:w-max-6xl md:px-20 py-8 md:gap-8">
       <div className="flex items-center justify-between gap-4 px-4">
@@ -192,4 +192,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default SchoolFees

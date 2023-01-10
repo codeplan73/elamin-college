@@ -1,0 +1,8 @@
+export {default as AdminLogin} from './AdminLogin'
+export {default as Dashboard} from './Dashboard'
+export {default as Featured} from './Featured'
+export {default as Gallery} from './Gallery'
+export {default as GeneralInfo} from './GeneralInfo'
+export {default as NewsEvent} from './NewsEvent'
+export {default as StudentRecord} from './StudentRecord'
+export {default as StudentResult} from './StudentResult'

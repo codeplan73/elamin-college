@@ -3,6 +3,7 @@ import {Hero} from '../components/'
 import { BsFillTelephoneInboundFill } from 'react-icons/bs'
 import { AiTwotoneMail } from 'react-icons/ai'
 import { MdLocationCity } from 'react-icons/md'
+import { Nav, Footer } from '../components/'
 
 const Contact = () => {
   const [name, setName] = useState('')
@@ -16,6 +17,7 @@ const Contact = () => {
   }
   return (
     <>
+    <Nav />
     <Hero title='Contact Us' text=''/>
   
       <div className="bg-white flex flex-col items-center justify-center gap-2 py-20 container max-w-7xl mx-auto pb-5">
@@ -67,7 +69,8 @@ const Contact = () => {
             </form>
           </div>
         </div>
-      </div>    
+      </div>  
+      <Footer />  
     </>
   )
 }

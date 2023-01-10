@@ -1,20 +1,20 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { Slider, Team } from '../components/'
 import { motion } from 'framer-motion'
-
+import { Nav, Footer } from '../components/'
 import image1 from '../assets/images/feature1.jpeg'
 import image2 from '../assets/images/feature2.jpeg'
 import image3 from '../assets/images/feature3.jpeg'
 import {MdSchool} from 'react-icons/md'
 import {GiTeacher, GiCrystalGrowth} from 'react-icons/gi'
 import {TbHeartHandshake} from 'react-icons/tb'
-// import {GiCrystalGrowth} from 'react-icons/gr'
 import images from './data'
 
 const Homepage = () => {
   
   return (
-    <main className="">
+    <main>
+      <Nav />
       <Slider />
       {/* about section */}
 
@@ -180,7 +180,7 @@ const Homepage = () => {
       </div>
 
       {/* Team section */}
-      <div>
+      {/* <div>
         <motion.div className='carousel'>
           <motion.div className='inner-carousel'>
             {images.map(image => {
@@ -192,8 +192,9 @@ const Homepage = () => {
             })}
           </motion.div>
         </motion.div>
-      </div>
+      </div> */}
       {/* <Team /> */}
+      <Footer />
     </main>
   )
 }

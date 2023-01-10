@@ -1,9 +1,11 @@
 import React from 'react'
 import {Hero} from '../components/'
+import { Nav, Footer } from '../components/'
 
 const About = () => {
   return (
     <div>
+      <Nav />
       <Hero title='About Us' text='About page information'/>
       {/* Mission statement */}
       <div className='bg-white flex flex-col pt-16 px-8 md:px-20 gap-4 text-justify pb-8'>
@@ -123,7 +125,8 @@ const About = () => {
           </li>
         </div>
       </div>
-      {/* End Mission statement */}.
+      {/* End Mission statement */}
+      <Footer />
     </div>
   )
 }
