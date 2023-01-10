@@ -21,12 +21,13 @@ const getAllActiveStudent = asyncHandler(async (req, res) => {
 })
 
 const getAllStudentRecords = asyncHandler(async (req, res) => {
-    const q = 'SELECT * FROM student_records'
-
-    db.query(q, (err, data) => {
-        if (err) return res.json(err)
-        res.status(200).json({ data })
-    })
+    sql = 'SELECT * FROM student_records';
+    query = db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.status(200).json({
+            items: results
+        });
+    });
 })
 
 const showStudentRecord = asyncHandler(async (req, res) => {

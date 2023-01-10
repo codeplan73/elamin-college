@@ -1,6 +1,8 @@
 const asyncHandler = require('express-async-handler')
 const mysql2 = require('mysql2')
 const { attachCookiesToResponse, createTokenUser } = require('./../utils')
+const {StatusCodes} = require('http-status-codes')
+const CustomError = require('./../errors')
 
 const db = mysql2.createConnection({
   host: process.env.DB_HOST,
@@ -39,29 +41,21 @@ const adminLogin = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Please provide all fields')
   }
-
+  
   const q = 'SELECT * FROM tbl_admin WHERE email =? AND password =?'
-  db.query(q, [email, password], (err, data) => {
-    if (err) return res.json(err)
+  db.query(q, [email, password], (error, results) => {
+    if (error) throw error;
 
-    if (data == '') return res.json({ msg: 'Invalid Credentials' })
+    if(results.length > 0){
+      const user = results[0]
 
-    const [{ company, name, email, phone, address, role, admin_id }] = data
-
-    const user = {
-      name,
-      email,
-      phone,
-      company,
-      address,
-      role,
-      userId: admin_id,
+      const tokenUser = createTokenUser(user)
+      attachCookiesToResponse({ res, user: tokenUser })
+      res.status(200).json({ user: tokenUser })
+    }else{
+      res.status(401).json({error: 'Invalid email or password'})
     }
-
-    const tokenUser = createTokenUser(user)
-    attachCookiesToResponse({ res, user: tokenUser })
-
-    res.status(200).json({ user: tokenUser })
+    
   })
 })
 

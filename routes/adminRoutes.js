@@ -10,12 +10,20 @@ const {
   deleteStudentRecord,
 } = require('../controllers/adminController')
 
-router.route('/').get(authenticateUser, getAllActiveStudent)
-router.route('/records').get(authenticateUser, getAllStudentRecords)
+router.get('/', getAllActiveStudent)
+router.get('/records', getAllStudentRecords)
 router
   .route('/:id')
-  .get(authenticateUser, showStudentRecord)
-  .patch(authenticateUser, updateStudentRecord)
-  .delete(authenticateUser, deleteStudentRecord)
+  .get(showStudentRecord)
+  .patch(updateStudentRecord)
+  .delete(deleteStudentRecord)
+
+// router.route('/').get(authenticateUser, getAllActiveStudent)
+// router.route('/records').get(authenticateUser, getAllStudentRecords)
+// router
+//   .route('/:id')
+//   .get(authenticateUser, showStudentRecord)
+//   .patch(authenticateUser, updateStudentRecord)
+//   .delete(authenticateUser, deleteStudentRecord)
 
 module.exports = router

@@ -8,8 +8,8 @@ const {
   logout,
 } = require('../controllers/authController')
 
-router.post('/login', login)
-router.post('/', adminLogin)
+// router.post('/login', login)
+router.post('/login', adminLogin)
 router.get('/logout', logout)
 router.get('/adminLogout', adminLogout)
 

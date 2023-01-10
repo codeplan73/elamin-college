@@ -9,6 +9,7 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 
 const port = process.env.PORT;
 const app = express()
+const cors = require('cors')
 
 // image upload with cloudinary
 const fileUpload = require('express-fileupload');
@@ -32,12 +33,14 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 })
 
-
+app.use(cors())
 app.use(morgan("tiny"));
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(fileUpload({ useTempFiles: true }));
+
+app.use(express.static('./public'));
 
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/admin", adminRouter)
@@ -48,6 +51,17 @@ app.use("/api/v1/info", generalInfoRoutes)
 app.use("/api/v1/result", resultRouter)
 app.use("/api/v1/student", studentRouter)
 app.use("/api/v1/team", teamRouter)
+
+
+// Add Access Control Allow Origin headers
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 app.use(errorHandler);
 app.listen(port, () => {

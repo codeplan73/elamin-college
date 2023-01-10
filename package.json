@@ -5,12 +5,15 @@
   "main": "app,js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "server": "nodemon app.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "emmanuel omonzebaguan",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.3",
     "cloudinary": "^1.33.0",
     "concurrently": "^7.6.0",
     "cookie-parser": "^1.4.6",
