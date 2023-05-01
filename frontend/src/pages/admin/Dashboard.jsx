@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { FaEdit } from 'react-icons/fa'
+import { FaBullseye, FaEdit } from 'react-icons/fa'
 import { BsTrash } from 'react-icons/bs'
 import { getStudents } from '../../redux/feature/student/studentSlice'
 import {
@@ -13,119 +14,127 @@ import {
 } from '../../components'
 import DataTable from 'react-data-table-component'
 
-const Dashboard = () => { 
-  const [filterText, setFilterText] = useState('')
-  const [resetPaginationToggle, setResetPaginationToggle] = useState(false)
-  const dispatch = useDispatch()
+const Dashboard = () => {
+  // const [data, setData] = useState([])
+  // const [loading, setLoading] = useState(false)
+  // const [perPage, setPerPage] = useState(10)
 
-  useEffect(() => {
-    dispatch(getStudents())
-  }, [])
-  const { students: results, loading } = useSelector((state) => state.students)
+  // const [filterText, setFilterText] = useState('')
+  // const [resetPaginationToggle, setResetPaginationToggle] = useState(false)
 
-  if (loading) {
-    return <Loading />
-  }
+  // const columns = [
+  //   {
+  //     name: 'ID',
+  //     selector: (row) => row.Student_ID,
+  //   },
+  //   {
+  //     name: 'Student Name',
+  //     selector: (row) => row.Fullnames,
+  //   },
+  //   {
+  //     name: 'Section',
+  //     selector: (row) => row.Section_Adm,
+  //   },
+  //   {
+  //     name: 'Class',
+  //     selector: (row) => row.Student_Class,
+  //   },
+  //   {
+  //     name: 'Pin',
+  //     selector: (row) => row.Student_Pin,
+  //   },
+  //   {
+  //     name: 'Action',
+  //     cell: (row) => (
+  //       <div className="flex gap-2 items-center">
+  //         <button
+  //           className="outline outline-teal-600 rounded p-1 text-slate-900"
+  //           onClick={() => handleEdit(row.ID)}
+  //         >
+  //           Edit
+  //         </button>
+  //         <button
+  //           className="outline outline-red-600 rounded p-1 text-slate-900"
+  //           onClick={() => handleDelete(row.ID)}
+  //         >
+  //           Delete
+  //         </button>
+  //       </div>
+  //     ),
+  //   },
+  // ]
 
-  const handleEdit = (id) => {
-    console.log(id)
-  }
+  // useEffect(() => {
+  //   getStudents()
+  // }, [])
+  
+  // async function getStudents() {
+  //   setLoading(true)
+  //   const response = await axios.get('http://localhost:5000/api/v1/admin/')
 
-  const handleDelete = (id) => {
-    console.log(id)
-  }
+  //   const student = response.data.results
+  //   setData(student)
+  //   console.log(student)
+  //   setLoading(false)
+  // }
 
-  if (results) {
-    const data = results.results
+  // const filteredItems = student.filter(
+  //   (item) =>
+  //     item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
+  // )
 
-    // const filteredItems = data.map(
-    //   (item) =>
-    //     item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
-    // )
+  // const subHeaderComponentMemo = React.useMemo(() => {
+  //   const handleClear = () => {
+  //     if (filterText) {
+  //       setResetPaginationToggle(!resetPaginationToggle)
+  //       setFilterText('')
+  //     }
+  //   }
 
-    const columns = [
-      {
-        name: 'ID',
-        selector: (row) => row.Student_ID,
-      },
-      {
-        name: 'Student Name',
-        selector: (row) => row.Fullnames,
-      },
-      {
-        name: 'Section',
-        selector: (row) => row.Section_Adm,
-      },
-      {
-        name: 'Class',
-        selector: (row) => row.Student_Class,
-      },
-      {
-        name: 'Pin',
-        selector: (row) => row.Student_Pin,
-      },
-      {
-        name: 'Action',
-        cell: (row) => (
-          <div className="flex gap-2 items-center">
-            <button
-              className="outline outline-teal-600 rounded p-1 text-slate-900"
-              onClick={() => handleEdit(row.ID)}
-            >
-              Edit
-            </button>
-            <button
-              className="outline outline-red-600 rounded p-1 text-slate-900"
-              onClick={() => handleDelete(row.ID)}
-            >
-              Delete
-            </button>
-          </div>
-        ),
-      },
-    ]
+  //   return (
+  //     <FilterComponent
+  //       onFilter={(e) => setFilterText(e.target.value)}
+  //       onClear={handleClear}
+  //       filterText={filterText}
+  //     />
+  //   )
+  // }, [filterText, resetPaginationToggle])
 
-    
+  // function handleEdit(row) {
+  //   console.log(row)
+  // }
 
-    // const subHeaderComponentMemo = React.useMemo(() => {
-    //   const handleClear = () => {
-    //     if (filterText) {
-    //       setResetPaginationToggle(!resetPaginationToggle)
-    //       setFilterText('')
-    //     }
-    //   }
+  // function handleDelete(row) {
+  //   console.log(row)
+  // }
 
-    //   return (
-    //     <FilterComponent
-    //       onFilter={(e) => setFilterText(e.target.value)}
-    //       onClear={handleClear}
-    //       filterText={filterText}
-    //     />
-    //   )
-    // }, [filterText, resetPaginationToggle])
+  // if (loading) {
+  //   return <Loading />
+  // }
 
-    return (
-      <div className="flex max-w-7xl">
-        <AdminNav />
-        <main className="flex flex-col w-full">
-          <AdminTopNav />
+  // console.log(filteredItems)
 
-          <DataTable
-        title="Contact List"
-        columns={columns}
-        data={data}
-        pagination
-        paginationResetDefaultPage={resetPaginationToggle}
-        subHeader
-        // subHeaderComponent={subHeaderComponentMemo}
-        persistTableHead
-      />
+  return (
+    <div className="flex max-w-7xl">
+      <AdminNav />
+      <main className="flex flex-col w-full">
+        <AdminTopNav />
 
-          <div></div>
-        </main>
-      </div>
-    )
-  }
+        {/* <DataTable
+          title="Contact List"
+          columns={columns}
+          data={filteredItems}
+          pagination
+          paginationResetDefaultPage={resetPaginationToggle}
+          subHeader
+          subHeaderComponent={subHeaderComponentMemo}
+          persistTableHead
+        /> */}
+
+        <div></div>
+      </main>
+    </div>
+  )
 }
 
 export default Dashboard

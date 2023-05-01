@@ -42,7 +42,7 @@ function DataList() {
     fetchTableData()
   }, [])
 
-  async function fetchTableData() {
+  async function fetchTableData() { 
     setLoading(true)
     const URL = 'https://jsonplaceholder.typicode.com/users'
     const response = await fetch(URL)
